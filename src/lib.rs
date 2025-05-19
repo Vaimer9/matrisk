@@ -12,8 +12,6 @@ mod tests {
     #[test]
     fn it_works() {
         let a = Matrix::new([[1., 2., 3.], [2., 3., 4.]]);
-        let b = Matrix::new([[1., 2., 3.], [2., 3., 4.]]);
-        let result = a * b.transpose();
-        println!("{:?}", result);
+        println!("{:?}", a.col(1));
     }
 }
