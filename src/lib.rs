@@ -11,7 +11,11 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let a = Matrix::new([[1., 2., 3.], [2., 3., 4.]]);
-        println!("{:?}", a.col(1));
+        let a = Matrix::new([
+            [1., 2., 3.],
+            [7., 3., 4.],
+            [4., 2., 6.]
+        ]);
+        println!("{:?}", a.col(0));
     }
 }

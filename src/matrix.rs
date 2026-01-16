@@ -32,8 +32,18 @@ impl<const N: usize, const M: usize> Matrix<N, M>
         return rx;
     }
 
-    pub fn col(&self, n: usize) -> Vector<M> {
+    pub fn row(&self, n: usize) -> Vector<M> {
         Vector(self.0[n])
+    }
+
+    pub fn col(&self, n: usize) -> Vector<N> {
+        let mut xs = Vector::<N>::splat(0.);
+
+        for i in 0..N {
+            xs.0[i] = self.0[i][n];
+        }
+
+        return xs;
     }
 
     pub fn rref(&self) -> Self {
