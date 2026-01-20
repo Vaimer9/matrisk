@@ -13,9 +13,12 @@ mod tests {
     fn it_works() {
         let a = Matrix::new([
             [1., 2., 3.],
-            [7., 3., 4.],
-            [4., 2., 6.]
+            [4., 5., 7.],
+            [8., 2., 6.]
         ]);
-        println!("{:?}", a.col(0));
+
+        let c = Matrix::<3, 3>::identity();
+
+        println!("{:?}", a * c );
     }
 }

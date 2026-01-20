@@ -46,21 +46,15 @@ impl<const N: usize, const M: usize> Matrix<N, M>
         return xs;
     }
 
+    // Will be added after adding row operations
     pub fn rref(&self) -> Self {
-        let rx = self;
+        todo!()
+    }
 
-        for i in 0..N {
-            let piv = rx.0[i][i];
-            let piv_c = self.col(i);
-
-            for j in 0..N {
-                if i == j {
-                    continue;
-                }
-            }
-        }
-
-        return self.clone();
+    pub fn swap_row(&mut self, src: usize, dest: usize) {
+        let clone = self.0[dest].clone();
+        self.0[dest] = self.0[src];
+        self.0[src] = clone;
     }
 }
 
