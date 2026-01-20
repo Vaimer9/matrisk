@@ -112,6 +112,18 @@ impl<const M: usize, const N: usize, const P: usize> Mul<Matrix<N, P>> for Matri
     }
 }
 
+impl<const N: usize> Matrix<N, N> {
+    pub fn identity() -> Self {
+        let mut rx = Matrix::<N, N>::splat(0.);
+        
+        for i in 0..N {
+            rx.0[i][i] = 1.;
+        }
+
+        return rx;
+    }
+}
+
 impl<const N: usize, const M: usize> Debug for Matrix<N, M> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         Ok(for i in 0..N {
