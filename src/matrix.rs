@@ -50,12 +50,6 @@ impl<const N: usize, const M: usize> Matrix<N, M>
     pub fn rref(&self) -> Self {
         todo!()
     }
-
-    pub fn swap_row(&mut self, src: usize, dest: usize) {
-        let clone = self.0[dest].clone();
-        self.0[dest] = self.0[src];
-        self.0[src] = clone;
-    }
 }
 
 impl<const N: usize, const M: usize> Add<Matrix<N, M>> for Matrix<N, M> {
