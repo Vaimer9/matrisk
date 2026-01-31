@@ -28,10 +28,6 @@ mod tests {
             [2., 3., 1., 2., 3., 1., 2., 3., 1., 2., 3., 1.,],
         ]);
 
-        let op = RowOperation::<12>::new()
-            .swap(1, 2)
-            .build();
-
-       println!("{:?}",  op * a);
+       println!("{:?}",  a.apply_row(RowOperation::new().swap(1, 2)));
     }
 }

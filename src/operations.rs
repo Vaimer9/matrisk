@@ -2,10 +2,10 @@ use crate::matrix::Matrix;
 
 pub trait Operation<const N: usize> {
     fn new() -> Self;
-    fn swap(&mut self, src: usize, dest: usize) -> &mut Self;
-    fn mult(&mut self, src: usize, mult: f64) -> &mut Self;
-    fn add_mult(&mut self, src: usize, dest: usize, mult: f64) -> &mut Self;
-    fn build(&self) -> Matrix<N, N>;
+    fn swap(self, src: usize, dest: usize) -> Self;
+    fn mult(self, src: usize, mult: f64) -> Self;
+    fn add_mult(self, src: usize, dest: usize, mult: f64) -> Self;
+    fn build(self) -> Matrix<N, N>;
 }
 
 #[derive(Clone, Copy)]
@@ -19,7 +19,7 @@ impl<const N: usize> Operation<N> for RowOperation<N> {
         Self(Matrix::<N, N>::identity())
     }
 
-    fn swap(&mut self, src: usize, dest: usize) -> &mut Self {
+    fn swap(mut self, src: usize, dest: usize) -> Self {
         let src = src - 1; // For indexing
         let dest = dest - 1;
         let t_s = self.0[src][src]; // Temporary Source
@@ -31,7 +31,7 @@ impl<const N: usize> Operation<N> for RowOperation<N> {
         return self;
     }
 
-    fn mult(&mut self, src: usize, mult: f64) -> &mut Self {
+    fn mult(mut self, src: usize, mult: f64) -> Self {
         let src = src - 1;
 
         self.0[src][src] = mult;
@@ -39,7 +39,7 @@ impl<const N: usize> Operation<N> for RowOperation<N> {
         return self;
     }
 
-    fn add_mult(&mut self, src: usize, dest: usize, mult: f64) -> &mut Self {
+    fn add_mult(mut self, src: usize, dest: usize, mult: f64) -> Self {
         let src = src - 1;
         let dest = dest - 1;
 
@@ -48,7 +48,7 @@ impl<const N: usize> Operation<N> for RowOperation<N> {
         return self;
     }
 
-    fn build(&self) -> Matrix<N, N> {
+    fn build(self) -> Matrix<N, N> {
         self.0
     }
 }

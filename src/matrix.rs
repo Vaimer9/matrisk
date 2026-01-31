@@ -1,5 +1,6 @@
 use std::ops::{Add, Index, IndexMut, Mul, Sub};
 use std::fmt::Debug;
+use crate::operations::Operation;
 use crate::vector::Vector;
 
 #[derive(Clone, Copy)]
@@ -44,6 +45,18 @@ impl<const N: usize, const M: usize> Matrix<N, M>
         }
 
         return xs;
+    }
+
+    pub fn apply_col<T>(&self, op: T) -> Self
+        where T: Operation<M>
+    {
+        *self * op.build()
+    }
+
+    pub fn apply_row<T>(&self, op: T) -> Self
+        where T: Operation<N>
+    {
+        op.build() * (*self)
     }
 
     // Will be added after adding row operations
