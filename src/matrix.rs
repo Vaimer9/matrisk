@@ -21,6 +21,11 @@ impl<const N: usize, const M: usize> Matrix<N, M>
         Self([[x; M]; N])
     }
 
+    // TODO: Make this not want to kill myself
+    pub fn raw(&mut self) -> &mut [[f64; M]; N] {
+        return self.0.as_mut_array().unwrap();
+    }
+
     pub fn transpose(&self) -> Matrix<M, N> {
         let mut rx = Matrix::<M, N>::splat(0.);
 
@@ -130,7 +135,7 @@ impl<const N: usize, const M: usize> Debug for Matrix<N, M> {
         Ok(for i in 0..N {
             write!(f, "| ")?;
             for j in 0..M {
-                write!(f, "{} ", self.0[i][j])?;
+                write!(f, "{:^x$} ", self.0[i][j], x = 3)?;
             }
             write!(f, "|\n")?;
         })

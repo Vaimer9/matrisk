@@ -7,7 +7,7 @@ pub mod operations;
 #[cfg(test)]
 mod tests {
     use matrix::Matrix;
-    use operations::{RowOperation, Operation};
+    use operations::*;
 
     use super::*;
 
@@ -28,6 +28,25 @@ mod tests {
             [2., 3., 1., 2., 3., 1., 2., 3., 1., 2., 3., 1.,],
         ]);
 
-       println!("{:?}",  a.apply_row(RowOperation::new().swap(1, 2)));
+        let b = Matrix::new([
+            [1., 1., 1.],
+            [2., 2., 2.],
+            [3., 3., 3.]
+        ]);
+
+        println!("{:?}", b);
+        let r = RowOperation::<12>::new()
+            .mult(1, 5.)
+            .swap(1, 2)
+            .swap(2, 3)
+            .mult(1, 5.)
+            .add_mult(1, 2, 1.)
+            .add_mult(1, 2, 1.)
+            .swap(1, 2)
+            .build();
+
+
+        println!("{:?}", r);
+        println!("{:?}", r * a);
     }
 }
