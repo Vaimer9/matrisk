@@ -21,31 +21,23 @@ impl<const N: usize> Operation<N> for RowOperation<N> {
 
     // Doing this the old fashioned way for perf
     fn swap(mut self, src: usize, dest: usize) -> Self {
-        let src = src - 1;
-        let dest = dest - 1;
         self.0.raw().swap(src, dest);
         return self;
     }
 
     fn mult(mut self, src: usize, mult: f64) -> Self {
-        let src = src - 1;
-
-        // self.0[src][src] = mult;
         self.0[src].iter_mut().for_each(|x| *x *= mult);
 
         return self;
     }
 
     fn add_mult(mut self, src: usize, dest: usize, mult: f64) -> Self {
-        let src = src - 1;
-        let dest = dest - 1;
-
         let x = self.0.raw();
-        let cpy = x[dest];
+        let cpy = x[src];
 
         // Im hoping the compilter auto-vectorizes, otherwise...
         // TODO: Make this simd
-        x[src].iter_mut().zip(cpy).for_each(|(y, x)| *y += mult * x);
+        x[dest].iter_mut().zip(cpy).for_each(|(y, x)| *y += mult * x);
         return self;
     }
 

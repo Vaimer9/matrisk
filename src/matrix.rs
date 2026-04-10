@@ -1,6 +1,6 @@
 use std::ops::{Add, Index, IndexMut, Mul, Sub};
 use std::fmt::Debug;
-use crate::operations::Operation;
+use crate::operations::{Operation, RowOperation};
 use crate::vector::Vector;
 
 #[derive(Clone, Copy)]
@@ -64,9 +64,29 @@ impl<const N: usize, const M: usize> Matrix<N, M>
         op.build() * (*self)
     }
 
-    // Will be added after adding row operations
     pub fn rref(&self) -> Self {
-        todo!()
+        let mut rt = self.clone();
+
+        for (i, _) in self.0[0].iter().enumerate() {
+            if i == self.0[0].len() - 1 { break; }
+
+            // Pivot + Row op per column
+            let p = rt[i][i];
+            let mut op = RowOperation::<N>::new();
+
+            // Ensuring Non-Zero pivot
+            if p == 0. { continue; }
+
+            for (j, row) in rt.0.iter().enumerate() {
+                if j == i { continue; }
+                op = op.add_mult(i, j, -(row[i] / p));
+            }
+
+            op = op.mult(i, 1. / p); // Normalize the pivot column
+            rt = op.build() * rt; // Apply the row operation
+        }
+
+        return rt;
     }
 }
 
@@ -135,7 +155,7 @@ impl<const N: usize, const M: usize> Debug for Matrix<N, M> {
         Ok(for i in 0..N {
             write!(f, "| ")?;
             for j in 0..M {
-                write!(f, "{:^x$} ", self.0[i][j], x = 3)?;
+                write!(f, "{:^x$} ", self.0[i][j] + 0.0, x = 3)?;
             }
             write!(f, "|\n")?;
         })
